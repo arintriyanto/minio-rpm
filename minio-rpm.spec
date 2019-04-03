@@ -47,7 +47,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %preun
 %if %use_systemd
 /usr/bin/systemctl stop %{name}
-%endifd
+%endif
 
 %postun
 %if %use_systemd
