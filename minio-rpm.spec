@@ -28,7 +28,7 @@ mkdir -p %{buildroot}/%{_bindir}
 %{__install} -m 755 %{SOURCE0} %{buildroot}%{_bindir}/%{name}
 %{__install} -m 0755 -d %{buildroot}/var/minio
 %{__install} -m 0755 -d %{buildroot}/etc/default
-%{__install} -m 755 %{SOURCE2} %{buildroot}/etc/default/minio
+%{__install} -m 664 %{SOURCE2} %{buildroot}/etc/default/minio
 
 %if %{use_systemd}
 %{__mkdir} -p %{buildroot}%{_unitdir}
