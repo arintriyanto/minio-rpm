@@ -26,7 +26,7 @@ Size of an object can range from a few KBs to a maximum of 5TB.
 rm -rf $RPM_BUILD_ROOT
 mkdir -p %{buildroot}/%{_bindir}
 %{__install} -m 755 %{SOURCE0} %{buildroot}/%{_bindir}/%{name}
-%{__install} -m 755 %{SOURCE0} %{buildroot}/etc/default/%{name}
+%{__install} -m 0755 -d %{buildroot}/etc/default
 %{__install} -m 0755 -d %{buildroot}/var/minio
 
 %if %{use_systemd}
