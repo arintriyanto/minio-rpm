@@ -9,7 +9,7 @@ Summary: Minio is an open source object storage server compatible with Amazon S3
 Group:   Development Tools
 License: ASL 2.0
 Source0: https://dl.minio.io/server/minio/release/linux-amd64/minio.%{tag}
-Source1: https://github.com/minio/minio-service/blob/master/linux-systemd/distributed/minio.service
+Source1: https://raw.githubusercontent.com/minio/minio-service/master/linux-systemd/distributed/minio.service
 Source2: minio
 Requires(pre): /usr/sbin/useradd, /usr/bin/getent
 Requires(postun): /usr/sbin/userdel
