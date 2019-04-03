@@ -1,7 +1,9 @@
 %global _prefix /usr/local
+%define  tag     RELEASE.2019-03-27T22-35-21Z
+%define  subver  %(echo %{tag} | sed -e 's/[^0-9]//g')
 
 Name:    minio
-Version: RELEASE.2019-03-27T22-35-21Z
+Version: 0.0.%{subver}
 Release: 1
 Summary: Minio is an open source object storage server compatible with Amazon S3 APIs
 Group:   Development Tools
