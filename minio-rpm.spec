@@ -60,6 +60,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %{_bindir}/%{name}
+%attr(-, minio-user, minio-user) /var/minio
 /etc/default/%{name}
 %if %{use_systemd}
 %{_unitdir}/%{name}.service
