@@ -4,15 +4,14 @@
 
 Name:    minio
 Version: 0.0.%{subver}
-Release: 1
+Release: 4
 Summary: Minio is an open source object storage server compatible with Amazon S3 APIs
 Group:   Development Tools
 License: ASL 2.0
 Source0: https://dl.minio.io/server/minio/release/linux-amd64/minio.%{tag}
 Source1: https://raw.githubusercontent.com/minio/minio-service/master/linux-systemd/distributed/minio.service
 Source2: minio
-Requires(pre): /usr/sbin/useradd, /usr/bin/getent
-Requires(postun): /usr/sbin/userdel
+Requires(pre): shadow-utils
 
 # Use systemd for fedora >= 18, rhel >=7, SUSE >= 12 SP1 and openSUSE >= 42.1
 %define use_systemd (0%{?fedora} && 0%{?fedora} >= 18) || (0%{?rhel} && 0%{?rhel} >= 7) || (!0%{?is_opensuse} && 0%{?suse_version} >=1210) || (0%{?is_opensuse} && 0%{?sle_version} >= 120100)
@@ -27,6 +26,7 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p %{buildroot}/%{_bindir}
 %{__install} -m 755 %{SOURCE0} %{buildroot}%{_bindir}/%{name}
 %{__install} -m 0755 -d %{buildroot}/var/minio
+%{__install} -m 0755 -d %{buildroot}/var/minio/data
 %{__install} -m 0755 -d %{buildroot}/etc/default
 %{__install} -m 664 %{SOURCE2} %{buildroot}/etc/default/minio
 
@@ -37,8 +37,11 @@ mkdir -p %{buildroot}/%{_bindir}
 %endif
 
 %pre
-/usr/bin/getent group minio-user || /usr/sbin/groupadd -r minio-user
-/usr/bin/getent passwd minio-user || /usr/sbin/useradd -r -d /var/minio -s /sbin/nologin minio-user
+getent group minio-user >/dev/null || groupadd -r minio-user
+getent passwd minio-user >/dev/null || \
+    useradd -r -g minio-user -d /var/minio -s /sbin/nologin \
+    -c "Useful comment about the purpose of this account" minio-user
+exit 0
 
 %post
 %if %use_systemd
@@ -61,6 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %{_bindir}/%{name}
 %attr(-, minio-user, minio-user) /var/minio
+%attr(-, minio-user, minio-user) /var/minio/data
 /etc/default/%{name}
 %if %{use_systemd}
 %{_unitdir}/%{name}.service

@@ -1,5 +1,5 @@
 # Remote volumes to be used for Minio server.
-#MINIO_VOLUMES=http://node1/var/minio http://node2/var/minio http://node3/var/minio http://node4/var/minio
+#MINIO_VOLUMES=http://node1/var/minio/data http://node2/var/minio/data http://node3/var/minio/data http://node4/var/minio/data
 # Access Key of the server.
 MINIO_ACCESS_KEY=Server-Access-Key
 # Secret key of the server.
